@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title  >Ajout Departement</title>
+
+</head>
+
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}"> Ajout des Departements </div>
+				<div class="card-header" th:if="${mode=='edit'}">Modification des Departements</div>
+				<div class="card-body">
+					<form th:action="@{saveDepartement}" method="post">
+					<div class="form-group">
+						<label class="control-label" hidden>ID Departement :</label>
+						<input type="hidden" name="idDepartement" class="form-control"th:value="${departement.idDepartement}" />
+					</div>
+						<div class="form-group">
+							<label class="control-label">Nom Departement :</label>
+							<input type="text" name="nomDepartement" class="form-control"
+							th:value="${departement.nomDepartement}"	 />
+
+							<span th:errors=${departement.nomDepartement} class="text-danger">
+
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Surface Departement:</label>
+							<input type="text" name="surfaceDepartement" class="form-control" th:value="${departement.surfaceDepartement}" />
+							<span th:errors=${departement.surfaceDepartement} class="text-danger"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">date création :</label>
+							<input type="date" name="dateCreation" class="form-control" th:value="${departement.dateCreation}" />
+							<span th:errors=${departement.dateCreation} class="text-danger"> </span>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">Parcours :</label> 
+							<select    type="text" name="parcours" class="form-control" th:value="${departement.parcours.idPar}"  >
+								<option th:each="c:${parcourss}" th:if="${mode=='edit'}"
+									th:value="${c.idPar}" th:text="${c.nomPar}"
+									th:selected="${ c.idPar==departement.parcours.idPar}"></option>
+
+								<option th:each="c:${parcourss}" th:if="${mode=='new'}"
+									th:value="${c.idPar}" th:text="${c.nomPar}"></option>
+							</select>
+						</div>
+						
+						
+						<div>
+							<button type="submit" class="btn btn-primary">Valider</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

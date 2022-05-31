@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+      
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Produits</title>
+</head>
+<body>
+   <div layout:fragment="Mycontent">
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">Liste des Produits</div>
+			<div class="card-body">
+			
+			<form th:action="@{chercherNom}" method="get">
+ <label>Departement à cherher </label>
+ <input  type="text" name="nomDepartement" th:value="${nomDepartement}"   />
+ <button class="btn btn-primary">Chercher</button>
+ </form>
+ <table class="table table-striped">
+ <tr>
+ <th>ID</th><th>Nom Produit</th><th>prix produit</th><th>date produit</th><th>categorie</th>
+  <th  >Modifier</th><th >Supprimer</th>
+ </tr> 
+ <tr th:each="p:${Produits}">
+						<td th:text="${p.idDepartement}"></td>
+						<td th:text="${p.nomDepartement}"></td>
+						<td th:text="${p.surfaceDepartement}"></td>
+						<td th:text="${p.dateCreation}"></td> 
+					<td   th:if= "${!#strings.isEmpty(p.parcours)}"   th:text="${p.parcours.nomPar}"></td>  
+						<td  ><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerDepartement(id=${p.idDepartement},page=${currentPage},size=${size})}">Supprimer</a>
+</td>
+<td ><a class="btn btn-success"
+th:href="@{modifierDepartement(id=${p.idDepartement})}">Editer</a></td>
+</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+						th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+						th:href="@{chercherNom(page=${status.index}, size=${size} ) }"
+						th:text="${status.index }"></a></li>
+				</ul>
+ </div>
+</div>
+</div>
+</div>
+</body>
+</html>
